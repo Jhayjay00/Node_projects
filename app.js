@@ -1,34 +1,33 @@
 const express = require('express');
 const ejs = require ('ejs');
+const fs = require('fs').promises;
+require('dotenv').config();
 const app = express();
 
-const port = 3000;
+app.get('/', async (req, res) =>{
 
-app.get('/', (req,res) =>{
+try {
 
-    const id =req.query.id;
-    const username = req.query.username;
+const fileName = "example.txt";
+const content = "Zanka no tachi";
 
-    req.send(`User ID :${id}. Username: ${username}`);
-
-});
-
-app.get('/products/:id', (req, res) =>{
+//write to the file 
+await fs.writeFile(fileName, content, 'utf-8');
 
 
-    const productId = req.params.id;
+    const data = await fs.readFile('example.txt', 'utf-8');
 
-    const products =[
-        {"id":1, "name": "Product A"},
-        {"id":2, "name": "Product B"},
-        {"id":3, "name": "Product C"}
+    res.send(data);
+    console.log(data);
+    
 
-    ];
+} catch (error) {
+    console.error('error reading file:', error);
+    //res.status(500).send('Internal Server Error');
+    res.send(error);
 
-    const product = products.find(product => product.id === parseInt(productId));
+}
 
-    product ? res.send(`Product id: ${product.id}. Name: ${product.name}`):
-        res.status(404).send('product not found');
 
 });
 
@@ -36,6 +35,7 @@ app.get('/products/:id', (req, res) =>{
 
 
 
+const port =  process.env.PORT || 3000;
 
 app.listen(port, () =>{
 console.log(`listening on port ${port}`);
