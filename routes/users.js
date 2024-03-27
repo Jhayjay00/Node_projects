@@ -71,8 +71,29 @@ router.post('/users', async (req, res) =>{
 });
 
 
+router.post('/users/:id/update', async (req, res) => {
 
+    try{
+        const data = await readData();
+        const user = data.users.find(user => user.id == req.params.id);
 
+        if(user){
+            user.username = req.body.new_username || user.username;
+            user.first_name = req.body.new_first_name || user.first_name;
+            user.email = req.body.new_email || user.email;
+
+            await writeData(data);
+
+            res.send(200).send('User successfully updated.  Updated database:' + JSON.stringify(data.users));
+        } else {
+
+            res.status(404).send("User is not found.");
+        }
+
+    }catch(error){
+        res.status(500).send("Internal Server Error", error);
+    }
+});
 
 
 
