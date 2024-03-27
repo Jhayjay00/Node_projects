@@ -1,13 +1,37 @@
-<!Doctype html>
+<!DOCTYPE html>
 
 
 <head>
-   
-    <link href="/css/style.css" rel="stylesheet" />
+<link href="/css/style.css" rel="stylesheet" />
 </head>
 
+
 <body>
+    <center>
  
+    <img src ="/images/download.png" />
+    <h3>Mock JSON Database CRUD Operations</h3>
+    
+    <%= data %>
+
+    <h4> User Form</h4>
+<form id="addUserForm" method="POST" action="/users">
+
+    <label for="username"></label>
+    <input type="text" id="username" name="username" required/>
+
+    <label for="first_name"></label>
+    <input type="text" id="first_name" name="first_name" required/>
+
+
+    <label for="email"> Email:</label>
+    <input type="email" id="email" name="email" required/>
+
+<button type="submit">Add User</button>
+</form>
+
+</center>
 </body>
+
 
 </html>
